@@ -1,0 +1,111 @@
+doctype html
+html 
+    head
+        meta(charset='utf-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+        meta(http-equiv='x-ua-compatible' content='ie=edge')
+
+        link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js')
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js')
+        script(src='https://kit.fontawesome.com/a076d05399.js')
+        title='myOlx'
+    body(style="font-family: 'Inter var',sans-serif")
+        nav(class='navbar navbar-expand-lg fixed-top d-flex justify-content-between' style='background-color: #F5F5F5')
+            div
+                a(class='navbar-brand text-dark' href='/')
+                    h3='myOlx'
+            div
+                form(class='form-inline mr-auto' action='/search' method='get')
+                    div(class='input-group')
+                        input(class='form-control' type='search' placeholder='Search' name='searchItem' aria-label='Search' aria-describedby='button-addon2' style='height: 50px; width:400px; border-color:black; border-width:3px' required)
+                        div(class='input-group-append')
+                            button(class='btn btn-dark' id='button-addon2' type='submit')
+                                i(class='fas fa-search' style='font-size:24px')
+            div
+                button(class='navbar-toggler' type='button' data-toggle='collapse' data-target='#collapsibleNavbar')
+                    span(class='navbar-toggler-icon')
+                div(class='collapse navbar-collapse' id='collapsibleNavbar')
+                    ul(class='navbar-nav')
+                        li(class='nav-item mr-5')
+                            a(href='/sell' class='btn btn-outline-dark' style='border-width:3px; border-radius:20px')='Sell'
+                        if(username)
+                            li(class='nav-item dropdown')
+                                h5
+                                    a(class='nav-link dropdown-toggle text-dark' href=`/user/${username}` id='navbardrop' data-toggle='dropdown')=username
+                                    div(class='dropdown-menu dropdown-menu-right')
+                                        a(class='dropdown-item' href=`/user/${username}`)='Your Profile'
+                                        a(class='dropdown-item' href=`/user/${username}/classifieds`)='Your Classifieds'
+                                        a(class='dropdown-item' href=`/user/${username}/settings`)='Settings'
+                                        a(class='dropdown-item' href='/logout')='Logout'
+                        else
+                            li(class='nav-item')
+                                a(href='/signin' style='font-size:22px; color:black; text-decoration:none')='Login'
+        nav(class='navbar navbar-expand-lg bg-muted navbar-light sticky-top d-flex justify-content-center' style='margin-top:70px; padding:10px')
+            div
+                button(class='navbar-toggler' type='button' data-toggle='collapse' data-target='#collapsibleNavbar2')
+                    span(class='navbar-toggler-icon')
+                div(class='collapse navbar-collapse' id='collapsibleNavbar2')
+                    ul(class='navbar-nav')
+                        li(class='nav-item mr-5')
+                            i(class='fas fa-mobile mr-1' style='font-size:24px')
+                            a(href='/category/Mobiles' style='color:black;text-decoration: none')='Mobiles'
+                        li(class='nav-item mr-5')
+                            i(class='fas fa-motorcycle mr-1' style='font-size:24px')
+                            a(href='/category/Bikes' style='color:black;text-decoration: none')='Bikes'
+                        li(class='nav-item mr-5')
+                            i(class='fas fa-car mr-1' style='font-size:24px')
+                            a(href='/category/Cars' style='color:black;text-decoration: none')='Cars'
+                        li(class='nav-item mr-5')
+                            i(class='fas fa-tv mr-1' style='font-size:24px')
+                            a(href='/category/Electronics&Appliances' style='color:black;text-decoration: none')='Electronics&Appliances'
+                        li(class='nav-item mr-5')
+                            i(class='fas fa-book mr-1' style='font-size:24px')
+                            a(href='/category/Books' style='color:black;text-decoration: none')='Books'
+                        li(class='nav-item mr-5')
+                            i(class='fas fa-search mr-1' style='font-size:24px')
+                            a(href='/category/Others' style='color:black;text-decoration: none')='Others'
+
+        div(class='container-fluid' style='margin-top:100px')
+            div(class='row')
+                div(class='col-12 col-sm-3')
+                    div(class='shadow p-3 mb-5 bg-white rounded pb-sm-3')
+                        h3(class='mt-3 mb-3' style='text-align:center')='Filter'
+                        form(action=`/category/${categoryName}` method='post' class='mt-sm-3')
+                            div(class='form-group col-sm-10 offset-sm-1')
+                                label(for='city' class='col-form-label')='City'
+                                input(type='text' class='form-control form-control-lg' id='city' placeholder='Enter city' name='city')
+                            div(class='form-group col-sm-10 offset-sm-1')
+                                label(for='state' class='col-form-label')='State'
+                                input(type='text' class='form-control form-control-lg' id='state' placeholder='Enter state' name='state')
+                            div(class='form-group col-sm-10 offset-sm-1')
+                                label(for='country' class='col-form-label')='Country'
+                                input(type='text' class='form-control form-control-lg' id='country' placeholder='Enter country' name='country')
+                            div(class='form-group col-sm-10 offset-sm-1')
+                                label(for='minprice' class='col-form-label')='Price'
+                                div(class='input-group mb-2')
+                                    div(class='input-group-prepend')
+                                        div(class='input-group-text')='₹'
+                                    input(type='number' class='form-control form-control-lg' id='minprice' placeholder='Min' name='minprice')
+                                div(class='input-group mb-2')
+                                    div(class='input-group-prepend')
+                                        div(class='input-group-text')='₹'
+                                    input(type='number' class='form-control form-control-lg' id='maxprice' placeholder='Max' name='maxprice')
+                            div(class='d-flex justify-content-center pt-sm-3')
+                                button(type='submit' class='btn btn-dark')='Add filter'
+                div(class='col-12 col-sm-9 shadow p-3 mb-5 bg-white rounded')
+                    div(class='row row-cols-1 row-cols-md-2 row-cols-lg-3')
+                            - for (var i = 0; i < classifiedList.length; i++){
+                                div(class='col mb-4')
+                                    div(class='card shadow p-3 mb-5 bg-white rounded')
+                                        img(class='card-img-top' src=`../${classifiedList[i].imagename}` style='height:300px')
+                                        div(class='card-body')
+                                            h4(class='card-title')=classifiedList[i].title
+                                            if(classifiedList[i].country == 'India')
+                                                h5(class='card-text')=`₹${classifiedList[i].price}`
+                                            else
+                                                h5(class='card-text')=`$${classifiedList[i].price}`
+                                            h6(class='card-text text-secondary')=`${classifiedList[i].city}, ${classifiedList[i].state}, ${classifiedList[i].country}`
+                                            a(href=`/classified/${classifiedList[i].id}` class='stretched-link')='View Ad'
+                            - }
