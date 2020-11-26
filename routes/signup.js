@@ -44,7 +44,7 @@ router.post('/', (req, res) => {
 				service: 'gmail',
 			  	auth: {
 			    	user: 'myolxservice@gmail.com',
-			    	pass: 'myolxservice@1'
+			    	pass: '*********'
 			  	}
 			});
 
